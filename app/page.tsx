@@ -1,7 +1,23 @@
+import Hero from '@/components/Hero';
+import Countdown from '@/components/Countdown';
+import OurStory from '@/components/OurStory';
+import Gallery from '@/components/Gallery';
+import EventInfo from '@/components/EventInfo';
+import RSVPForm from '@/components/RSVPForm';
+import GiftList from '@/components/GiftList';
+import Footer from '@/components/Footer';
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-black">
-      <h1 className="text-4xl font-bold text-white">Tailwind v4 Next-ready</h1>
+    <main className="min-h-screen bg-white">
+      <Hero />
+      <Countdown />
+      <OurStory />
+      <Gallery />
+      <EventInfo />
+      <RSVPForm />
+      <GiftList />
+      <Footer />
     </main>
   );
 }

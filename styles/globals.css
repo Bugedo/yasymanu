@@ -1,1 +1,24 @@
 @import 'tailwindcss';
+
+@theme {
+  /* Colores personalizados */
+  --color-emerald: #50C878;
+  --color-emerald-light: #6FD98E;
+  --color-emerald-dark: #3BA662;
+  
+  --color-olive: #708238;
+  --color-olive-light: #8A9D4A;
+  --color-olive-dark: #5A6A2D;
+  
+  --color-gold: #D4AF37;
+  --color-gold-light: #E0C255;
+  --color-gold-dark: #B89730;
+  
+  /* Fuentes */
+  --font-display: "Playfair Display", serif;
+  --font-elegant: "Cormorant Garamond", serif;
+}
+
+body {
+  font-family: var(--font-elegant);
+}
