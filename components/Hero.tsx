@@ -17,7 +17,7 @@ export default function Hero() {
 
         {/* Nombres de los novios */}
         <h1 className="font-display text-6xl md:text-8xl font-bold text-olive mb-4 tracking-wide">
-          Yasmin & Manu
+          Yasmin & Manuel
         </h1>
 
         <div className="my-8">
@@ -26,13 +26,13 @@ export default function Hero() {
 
         {/* Fecha del evento */}
         <p className="font-elegant text-2xl md:text-3xl text-olive-light mb-6">Nos casamos</p>
-        <p className="font-display text-4xl md:text-5xl font-semibold text-emerald mb-8">
-          15 de Junio, 2025
+        <p className="font-display text-5xl md:text-7xl font-semibold text-olive mb-8">
+          <span className="text-6xl md:text-8xl">7</span> de Noviembre
         </p>
 
         {/* Mensaje */}
         <p className="font-elegant text-xl md:text-2xl text-gray-600 italic max-w-2xl mx-auto">
-          Te invitamos a celebrar con nosotros este día tan especial
+          Nuestro éxito es el amor que nos rodea y queremos que formes parte de él en nuestra boda
         </p>
 
         {/* Ornamento inferior */}

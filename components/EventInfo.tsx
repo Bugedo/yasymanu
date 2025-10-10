@@ -1,4 +1,25 @@
+'use client';
+
+import Image from 'next/image';
+import { useState } from 'react';
+
 export default function EventInfo() {
+  const [showMaps, setShowMaps] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleToggleMaps = () => {
+    if (showMaps) {
+      // Si está abierto, iniciar animación de cierre
+      setIsClosing(true);
+      setTimeout(() => {
+        setShowMaps(false);
+        setIsClosing(false);
+      }, 600); // Duración de la animación
+    } else {
+      // Si está cerrado, abrir directamente
+      setShowMaps(true);
+    }
+  };
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-white via-olive/5 to-white">
       <div className="max-w-6xl mx-auto">
@@ -10,178 +31,163 @@ export default function EventInfo() {
           <p className="font-elegant text-xl text-gray-600 italic">Dónde y cuándo celebraremos</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 gap-8 mb-12 md:items-stretch">
           {/* Ceremonia */}
-          <div className="bg-white rounded-lg shadow-xl border-2 border-gold/30 p-8 hover:shadow-2xl transition-shadow">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-emerald to-emerald-dark rounded-full flex items-center justify-center">
-                <svg
-                  className="w-10 h-10 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                  />
-                </svg>
-              </div>
+          <div className="bg-white rounded-lg shadow-xl border-2 border-gold/30 overflow-hidden hover:shadow-2xl transition-shadow flex flex-col">
+            {/* Imagen del Convento */}
+            <div className="relative h-64 w-full">
+              <Image
+                src="/images/events/conventosanalfondo.jpg"
+                alt="Convento San Alfonso"
+                fill
+                className="object-cover"
+              />
             </div>
 
-            <h3 className="font-display text-3xl font-bold text-olive text-center mb-4">
-              Ceremonia
-            </h3>
+            <div className="p-8 flex flex-col flex-grow">
+              <h3 className="font-display text-3xl font-bold text-olive text-center mb-6">
+                Ceremonia
+              </h3>
 
-            <div className="space-y-4 font-elegant text-lg text-gray-700">
-              <div className="flex items-start">
-                <svg
-                  className="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+              <div className="text-center space-y-3">
                 <div>
-                  <p className="font-semibold text-olive">Hora</p>
-                  <p>18:00 hs</p>
+                  <p className="font-display text-3xl font-bold text-olive">Convento San Alfonso</p>
+                  <p className="font-elegant text-2xl text-gray-600 mt-2">
+                    San Clemente 190, Villa Allende
+                  </p>
+                </div>
+                <div className="pt-4">
+                  <p className="font-display text-2xl font-semibold text-olive">20:30 hs</p>
                 </div>
               </div>
 
-              <div className="flex items-start">
-                <svg
-                  className="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {/* Botón desplegable para el mapa */}
+              <div className="mt-auto pt-6">
+                <button
+                  onClick={handleToggleMaps}
+                  className="w-full bg-gradient-to-r from-olive to-olive-dark text-white font-elegant py-3 px-4 rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <div>
-                  <p className="font-semibold text-olive">Lugar</p>
-                  <p>Iglesia San Francisco</p>
-                  <p className="text-sm text-gray-500">Av. Libertador 1234, CABA</p>
-                </div>
-              </div>
-            </div>
-          </div>
+                  CÓMO LLEGAR A LA CEREMONIA
+                  <svg
+                    className={`w-5 h-5 transition-transform duration-600 ${showMaps ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
 
-          {/* Fiesta */}
-          <div className="bg-white rounded-lg shadow-xl border-2 border-gold/30 p-8 hover:shadow-2xl transition-shadow">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-olive to-olive-dark rounded-full flex items-center justify-center">
-                <svg
-                  className="w-10 h-10 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <h3 className="font-display text-3xl font-bold text-olive text-center mb-4">Fiesta</h3>
-
-            <div className="space-y-4 font-elegant text-lg text-gray-700">
-              <div className="flex items-start">
-                <svg
-                  className="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <div>
-                  <p className="font-semibold text-olive">Hora</p>
-                  <p>20:00 hs</p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <svg
-                  className="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <div>
-                  <p className="font-semibold text-olive">Lugar</p>
-                  <p>Salón de Eventos &quot;El Jardín&quot;</p>
-                  <p className="text-sm text-gray-500">Camino del Buen Ayre Km 18, Zona Norte</p>
-                </div>
+                {/* Contenido desplegable */}
+                {showMaps && (
+                  <div
+                    className={`mt-4 border-t border-gold/20 pt-4 ${isClosing ? 'animate-slideUp' : 'animate-slideDown'}`}
+                  >
+                    <div className="aspect-video mb-4">
+                      <iframe
+                        src="https://maps.google.com/maps?q=Convento+San+Alfonso,San+Clemente+190,Villa+Allende,Córdoba&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      ></iframe>
+                    </div>
+                    <a
+                      href="https://maps.app.goo.gl/9DNDjEpPDkNsz6td7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center bg-gradient-to-r from-olive/80 to-olive-dark/80 text-white font-elegant py-2 rounded-lg hover:shadow-lg transition-all"
+                    >
+                      Ver en Google Maps
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Mapa embebido */}
-        <div className="bg-white rounded-lg shadow-xl border-2 border-gold/30 overflow-hidden">
-          <div className="aspect-video bg-gradient-to-br from-emerald/10 via-olive/10 to-gold/10 flex items-center justify-center">
-            <div className="text-center p-8">
-              <svg
-                className="w-20 h-20 text-olive/30 mx-auto mb-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                />
-              </svg>
-              <p className="font-elegant text-xl text-olive/70 mb-2">Mapa del lugar</p>
-              <p className="font-elegant text-sm text-gray-500">
-                Aquí puedes insertar un mapa de Google Maps embebido
-              </p>
-              <p className="font-elegant text-xs text-gray-400 mt-4">
-                Reemplaza este placeholder con un iframe de Google Maps
-              </p>
+          {/* Recepción */}
+          <div className="bg-white rounded-lg shadow-xl border-2 border-gold/30 overflow-hidden hover:shadow-2xl transition-shadow flex flex-col">
+            {/* Imagen del Salón */}
+            <div className="relative h-64 w-full">
+              <Image
+                src="/images/events/salonbolgheri.jpg"
+                alt="Salon Bolgheri"
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="p-8 flex flex-col flex-grow">
+              <h3 className="font-display text-3xl font-bold text-olive text-center mb-6">
+                Recepción
+              </h3>
+
+              <div className="text-center">
+                <div>
+                  <p className="font-display text-3xl font-bold text-olive">Salon Bolgheri</p>
+                  <p className="font-elegant text-2xl text-gray-600 mt-2">
+                    Derqui 703, Villa Allende
+                  </p>
+                </div>
+              </div>
+
+              {/* Botón desplegable para el mapa */}
+              <div className="mt-auto pt-6">
+                <button
+                  onClick={handleToggleMaps}
+                  className="w-full bg-gradient-to-r from-olive to-olive-dark text-white font-elegant py-3 px-4 rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                >
+                  CÓMO LLEGAR A LA RECEPCIÓN
+                  <svg
+                    className={`w-5 h-5 transition-transform duration-600 ${showMaps ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+
+                {/* Contenido desplegable */}
+                {showMaps && (
+                  <div
+                    className={`mt-4 border-t border-gold/20 pt-4 ${isClosing ? 'animate-slideUp' : 'animate-slideDown'}`}
+                  >
+                    <div className="aspect-video mb-4">
+                      <iframe
+                        src="https://maps.google.com/maps?q=Salon+Bolgheri,Derqui+703,Villa+Allende,Córdoba&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      ></iframe>
+                    </div>
+                    <a
+                      href="https://maps.app.goo.gl/wNG3E1tjp7WD4LQY8"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full text-center bg-gradient-to-r from-olive/80 to-olive-dark/80 text-white font-elegant py-2 rounded-lg hover:shadow-lg transition-all"
+                    >
+                      Ver en Google Maps
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

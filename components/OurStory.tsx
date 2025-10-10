@@ -22,11 +22,11 @@ export default function OurStory() {
       date: 'Diciembre 2023',
       title: 'La Propuesta',
       description:
-        'En el mismo lugar donde nos conocimos, Manu se arrodilló y preguntó "¿Te casarías conmigo?"',
+        'En el mismo lugar donde nos conocimos, Manuel se arrodilló y preguntó "¿Te casarías conmigo?"',
       icon: '💍',
     },
     {
-      date: 'Junio 2025',
+      date: 'Noviembre 2025',
       title: 'Nuestra Boda',
       description:
         '¡El día que tanto esperamos! Celebramos nuestro amor rodeados de familia y amigos.',

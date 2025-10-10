@@ -1,6 +1,5 @@
 import Hero from '@/components/Hero';
 import Countdown from '@/components/Countdown';
-import OurStory from '@/components/OurStory';
 import Gallery from '@/components/Gallery';
 import EventInfo from '@/components/EventInfo';
 import RSVPForm from '@/components/RSVPForm';
@@ -12,7 +11,6 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <Hero />
       <Countdown />
-      <OurStory />
       <Gallery />
       <EventInfo />
       <RSVPForm />

@@ -11,7 +11,8 @@ export default function Countdown() {
   });
 
   useEffect(() => {
-    const weddingDate = new Date('2025-06-15T18:00:00').getTime();
+    // 7 de Noviembre 2025, 20:30 hora de Buenos Aires (UTC-3)
+    const weddingDate = new Date('2025-11-07T20:30:00-03:00').getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -43,7 +44,7 @@ export default function Countdown() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-emerald/10 to-olive/10 rounded-lg p-6 md:p-8 border-2 border-gold/20 shadow-lg">
-            <div className="font-display text-5xl md:text-6xl font-bold text-emerald mb-2">
+            <div className="font-display text-5xl md:text-6xl font-bold text-olive mb-2">
               {timeLeft.days}
             </div>
             <div className="font-elegant text-lg md:text-xl text-olive-light uppercase tracking-wider">
@@ -52,7 +53,7 @@ export default function Countdown() {
           </div>
 
           <div className="bg-gradient-to-br from-emerald/10 to-olive/10 rounded-lg p-6 md:p-8 border-2 border-gold/20 shadow-lg">
-            <div className="font-display text-5xl md:text-6xl font-bold text-emerald mb-2">
+            <div className="font-display text-5xl md:text-6xl font-bold text-olive mb-2">
               {timeLeft.hours}
             </div>
             <div className="font-elegant text-lg md:text-xl text-olive-light uppercase tracking-wider">
@@ -61,7 +62,7 @@ export default function Countdown() {
           </div>
 
           <div className="bg-gradient-to-br from-emerald/10 to-olive/10 rounded-lg p-6 md:p-8 border-2 border-gold/20 shadow-lg">
-            <div className="font-display text-5xl md:text-6xl font-bold text-emerald mb-2">
+            <div className="font-display text-5xl md:text-6xl font-bold text-olive mb-2">
               {timeLeft.minutes}
             </div>
             <div className="font-elegant text-lg md:text-xl text-olive-light uppercase tracking-wider">
@@ -70,7 +71,7 @@ export default function Countdown() {
           </div>
 
           <div className="bg-gradient-to-br from-emerald/10 to-olive/10 rounded-lg p-6 md:p-8 border-2 border-gold/20 shadow-lg">
-            <div className="font-display text-5xl md:text-6xl font-bold text-emerald mb-2">
+            <div className="font-display text-5xl md:text-6xl font-bold text-olive mb-2">
               {timeLeft.seconds}
             </div>
             <div className="font-elegant text-lg md:text-xl text-olive-light uppercase tracking-wider">
@@ -86,4 +87,3 @@ export default function Countdown() {
     </section>
   );
 }
-

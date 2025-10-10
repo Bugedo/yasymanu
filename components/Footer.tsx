@@ -11,7 +11,7 @@ export default function Footer() {
 
         {/* Mensaje principal */}
         <h3 className="font-display text-3xl md:text-4xl font-bold mb-6 text-gold">
-          Yasmin & Manu
+          Yasmin & Manuel
         </h3>
 
         <p className="font-elegant text-xl md:text-2xl italic mb-8 text-emerald-light leading-relaxed">
@@ -93,7 +93,7 @@ export default function Footer() {
         </div>
 
         <p className="font-elegant text-sm text-white/60">
-          © 2025 Yasmin & Manu. Con amor, para siempre.
+          © 2025 Yasmin & Manuel. Con amor, para siempre.
         </p>
       </div>
     </footer>
