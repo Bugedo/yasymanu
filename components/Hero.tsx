@@ -11,8 +11,8 @@ export default function Hero() {
   });
 
   useEffect(() => {
-    // 7 de Noviembre 2025, 20:30 hora de Buenos Aires (UTC-3)
-    const weddingDate = new Date('2025-11-07T20:30:00-03:00').getTime();
+    // 7 de Noviembre 2026, 20:30 hora de Buenos Aires (UTC-3)
+    const weddingDate = new Date('2026-11-07T20:30:00-03:00').getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
