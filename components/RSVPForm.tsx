@@ -285,7 +285,7 @@ export default function RSVPForm() {
                           type="checkbox"
                           checked={formData.dietaryRestrictions.includes(restriction.value)}
                           onChange={() => handleCheckboxChange(restriction.value)}
-                          className="w-5 h-5 rounded-full border-2 border-gold/30 text-emerald focus:ring-2 focus:ring-emerald"
+                          className="w-5 h-5 rounded-full border-2 border-gold/50 appearance-none cursor-pointer checked:bg-emerald checked:border-emerald transition-colors"
                         />
                         <span className="font-elegant text-base" style={{ color: '#FAF8F3' }}>
                           {restriction.label}
