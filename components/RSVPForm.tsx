@@ -5,11 +5,13 @@ import { useState } from 'react';
 export default function RSVPForm() {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
-    guests: '1',
-    attending: 'yes',
-    dietaryRestrictions: '',
-    message: '',
+    attending: 'si',
+    withCompanion: 'solo',
+    numberOfGuests: '2',
+    withMinors: 'no',
+    minorsDetails: '',
+    dietaryRestrictions: [] as string[],
+    otherRestriction: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -39,7 +41,6 @@ export default function RSVPForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para enviar el formulario
     console.log('Form data:', formData);
     setSubmitted(true);
   };
@@ -51,6 +52,21 @@ export default function RSVPForm() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleCheckboxChange = (value: string) => {
+    const restrictions = formData.dietaryRestrictions;
+    if (restrictions.includes(value)) {
+      setFormData({
+        ...formData,
+        dietaryRestrictions: restrictions.filter((r) => r !== value),
+      });
+    } else {
+      setFormData({
+        ...formData,
+        dietaryRestrictions: [...restrictions, value],
+      });
+    }
   };
 
   if (submitted) {
@@ -105,14 +121,14 @@ export default function RSVPForm() {
           </div>
 
           <div className="space-y-6">
-            {/* Nombre */}
+            {/* Nombre Apellido */}
             <div>
               <label
                 htmlFor="name"
                 className="block font-display text-lg font-semibold mb-2"
                 style={{ color: '#FAF8F3' }}
               >
-                Nombre Completo *
+                Nombre Apellido *
               </label>
               <input
                 type="text"
@@ -122,39 +138,18 @@ export default function RSVPForm() {
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                placeholder="Tu nombre"
+                placeholder="Tu nombre completo"
               />
             </div>
 
-            {/* Email */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block font-display text-lg font-semibold mb-2"
-                style={{ color: '#FAF8F3' }}
-              >
-                Email *
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                placeholder="tu@email.com"
-              />
-            </div>
-
-            {/* Asistencia */}
+            {/* Contamos con tu presencia */}
             <div>
               <label
                 htmlFor="attending"
                 className="block font-display text-lg font-semibold mb-2"
                 style={{ color: '#FAF8F3' }}
               >
-                ¿Asistirás? *
+                Contamos con tu presencia *
               </label>
               <select
                 id="attending"
@@ -164,79 +159,152 @@ export default function RSVPForm() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
               >
-                <option value="yes">Sí, asistiré con mucho gusto</option>
-                <option value="no">Lamentablemente no podré asistir</option>
+                <option value="si">Obvio si 🥂🎊</option>
+                <option value="no">Lamentablemente no puedo 🥹</option>
+                <option value="despues-cena">Voy después de cena</option>
               </select>
             </div>
 
-            {/* Número de invitados */}
-            {formData.attending === 'yes' && (
-              <div>
-                <label
-                  htmlFor="guests"
-                  className="block font-display text-lg font-semibold mb-2"
-                  style={{ color: '#FAF8F3' }}
-                >
-                  Número de Invitados *
-                </label>
-                <select
-                  id="guests"
-                  name="guests"
-                  required
-                  value={formData.guests}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                >
-                  {[1, 2, 3, 4, 5].map((num) => (
-                    <option key={num} value={num}>
-                      {num} {num === 1 ? 'persona' : 'personas'}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+            {/* Mostrar más preguntas solo si confirma asistencia */}
+            {(formData.attending === 'si' || formData.attending === 'despues-cena') && (
+              <>
+                {/* ¿Vas a venir con alguien? */}
+                <div>
+                  <label
+                    htmlFor="withCompanion"
+                    className="block font-display text-lg font-semibold mb-2"
+                    style={{ color: '#FAF8F3' }}
+                  >
+                    ¿Vas a venir con alguien? *
+                  </label>
+                  <select
+                    id="withCompanion"
+                    name="withCompanion"
+                    required
+                    value={formData.withCompanion}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
+                  >
+                    <option value="solo">Voy sol@</option>
+                    <option value="acompaniado">Voy acompañando</option>
+                  </select>
+                </div>
 
-            {/* Restricciones alimentarias */}
-            {formData.attending === 'yes' && (
-              <div>
-                <label
-                  htmlFor="dietaryRestrictions"
-                  className="block font-display text-lg font-semibold mb-2"
-                  style={{ color: '#FAF8F3' }}
-                >
-                  Restricciones Alimentarias
-                </label>
-                <input
-                  type="text"
-                  id="dietaryRestrictions"
-                  name="dietaryRestrictions"
-                  value={formData.dietaryRestrictions}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                  placeholder="Vegetariano, vegano, alergias, etc."
-                />
-              </div>
-            )}
+                {/* ¿Cuántos serían? */}
+                {formData.withCompanion === 'acompaniado' && (
+                  <div>
+                    <label
+                      htmlFor="numberOfGuests"
+                      className="block font-display text-lg font-semibold mb-2"
+                      style={{ color: '#FAF8F3' }}
+                    >
+                      ¿Cuántos serían? *
+                    </label>
+                    <input
+                      type="number"
+                      id="numberOfGuests"
+                      name="numberOfGuests"
+                      min="2"
+                      max="10"
+                      required
+                      value={formData.numberOfGuests}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
+                      placeholder="Número total de personas"
+                    />
+                  </div>
+                )}
 
-            {/* Mensaje */}
-            <div>
-              <label
-                htmlFor="message"
-                className="block font-display text-lg font-semibold mb-2"
-                style={{ color: '#FAF8F3' }}
-              >
-                Mensaje para los Novios
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                placeholder="Déjanos un mensaje..."
-              />
-            </div>
+                {/* ¿Venís acompañado de menores? */}
+                <div>
+                  <label
+                    htmlFor="withMinors"
+                    className="block font-display text-lg font-semibold mb-2"
+                    style={{ color: '#FAF8F3' }}
+                  >
+                    ¿Venís acompañado de menores? *
+                  </label>
+                  <select
+                    id="withMinors"
+                    name="withMinors"
+                    required
+                    value={formData.withMinors}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
+                  >
+                    <option value="no">No</option>
+                    <option value="menor-2">Si (menor de 2 años)</option>
+                    <option value="2-10">Si (de 2-10 años)</option>
+                    <option value="mas-10">Más de 10 años</option>
+                  </select>
+                </div>
+
+                {/* ¿Cuántos menores en total? Aclarar edades */}
+                {formData.withMinors !== 'no' && (
+                  <div>
+                    <label
+                      htmlFor="minorsDetails"
+                      className="block font-display text-lg font-semibold mb-2"
+                      style={{ color: '#FAF8F3' }}
+                    >
+                      ¿Cuántos menores en total? Aclarar edades
+                    </label>
+                    <input
+                      type="text"
+                      id="minorsDetails"
+                      name="minorsDetails"
+                      value={formData.minorsDetails}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
+                      placeholder="Ej: 2 niños (4 y 7 años)"
+                    />
+                  </div>
+                )}
+
+                {/* Restricciones alimentarias */}
+                <div>
+                  <label className="block font-display text-lg font-semibold mb-3" style={{ color: '#FAF8F3' }}>
+                    ¿Alguna restricción alimentaria? Avísanos para que también puedas comer rico 🤤
+                  </label>
+                  <div className="space-y-2">
+                    {[
+                      { value: 'celiquia', label: 'Celiaquía' },
+                      { value: 'diabetes', label: 'Diabetes' },
+                      { value: 'vegano', label: 'Vegan@' },
+                      { value: 'vegetariano', label: 'Vegetarian@' },
+                      { value: 'otros', label: 'Otros' },
+                    ].map((restriction) => (
+                      <label
+                        key={restriction.value}
+                        className="flex items-center space-x-3 cursor-pointer"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={formData.dietaryRestrictions.includes(restriction.value)}
+                          onChange={() => handleCheckboxChange(restriction.value)}
+                          className="w-5 h-5 rounded border-2 border-gold/30 text-emerald focus:ring-2 focus:ring-emerald"
+                        />
+                        <span className="font-elegant text-base" style={{ color: '#FAF8F3' }}>
+                          {restriction.label}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+
+                  {/* Campo para especificar otros */}
+                  {formData.dietaryRestrictions.includes('otros') && (
+                    <input
+                      type="text"
+                      name="otherRestriction"
+                      value={formData.otherRestriction}
+                      onChange={handleChange}
+                      className="mt-3 w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
+                      placeholder="Especifica la restricción alimentaria"
+                    />
+                  )}
+                </div>
+              </>
+            )}
 
             {/* Botón de envío */}
             <button
