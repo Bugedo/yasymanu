@@ -18,9 +18,11 @@ export default function RSVPForm() {
   const [isClosingPayment, setIsClosingPayment] = useState(false);
 
   const copyToClipboard = (text: string, field: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
+    if (navigator?.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    }
   };
 
   const handleTogglePaymentData = () => {
