@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-olive to-olive-dark text-white pt-16 pb-2 px-4">
+    <footer className="relative z-10 bg-gradient-to-br from-olive to-olive-dark/95 text-white pt-16 pb-2 px-4 backdrop-blur-sm">
       <div className="max-w-4xl mx-auto text-center">
         {/* Ornamento superior */}
         <div className="mb-8 flex justify-center">

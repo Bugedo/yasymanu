@@ -1,39 +1,91 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function EventInfo() {
-  const [showMaps, setShowMaps] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+  const [showCeremoniaMap, setShowCeremoniaMap] = useState(false);
+  const [showRecepcionMap, setShowRecepcionMap] = useState(false);
+  const [isClosingCeremonia, setIsClosingCeremonia] = useState(false);
+  const [isClosingRecepcion, setIsClosingRecepcion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const handleToggleMaps = () => {
-    if (showMaps) {
-      // Si está abierto, iniciar animación de cierre
-      setIsClosing(true);
-      setTimeout(() => {
-        setShowMaps(false);
-        setIsClosing(false);
-      }, 600); // Duración de la animación
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleToggleCeremonia = () => {
+    if (isMobile) {
+      // En mobile solo toggle ceremonia
+      if (showCeremoniaMap) {
+        setIsClosingCeremonia(true);
+        setTimeout(() => {
+          setShowCeremoniaMap(false);
+          setIsClosingCeremonia(false);
+        }, 600);
+      } else {
+        setShowCeremoniaMap(true);
+      }
     } else {
-      // Si está cerrado, abrir directamente
-      setShowMaps(true);
+      // En desktop toggle ambos
+      if (showCeremoniaMap || showRecepcionMap) {
+        setIsClosingCeremonia(true);
+        setIsClosingRecepcion(true);
+        setTimeout(() => {
+          setShowCeremoniaMap(false);
+          setShowRecepcionMap(false);
+          setIsClosingCeremonia(false);
+          setIsClosingRecepcion(false);
+        }, 600);
+      } else {
+        setShowCeremoniaMap(true);
+        setShowRecepcionMap(true);
+      }
+    }
+  };
+
+  const handleToggleRecepcion = () => {
+    if (isMobile) {
+      // En mobile solo toggle recepción
+      if (showRecepcionMap) {
+        setIsClosingRecepcion(true);
+        setTimeout(() => {
+          setShowRecepcionMap(false);
+          setIsClosingRecepcion(false);
+        }, 600);
+      } else {
+        setShowRecepcionMap(true);
+      }
+    } else {
+      // En desktop toggle ambos
+      if (showCeremoniaMap || showRecepcionMap) {
+        setIsClosingCeremonia(true);
+        setIsClosingRecepcion(true);
+        setTimeout(() => {
+          setShowCeremoniaMap(false);
+          setShowRecepcionMap(false);
+          setIsClosingCeremonia(false);
+          setIsClosingRecepcion(false);
+        }, 600);
+      } else {
+        setShowCeremoniaMap(true);
+        setShowRecepcionMap(true);
+      }
     }
   };
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-white via-olive/5 to-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-olive mb-4">
-            Detalles del Evento
-          </h2>
-          <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
-          <p className="font-elegant text-xl text-gray-600 italic">Dónde y cuándo celebraremos</p>
-        </div>
-
+    <section className="relative z-10">
+      <div className="py-20 px-4 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 mb-12 md:items-stretch">
           {/* Ceremonia */}
-          <div className="bg-white rounded-lg shadow-xl border-2 border-gold/30 overflow-hidden hover:shadow-2xl transition-shadow flex flex-col">
+          <div className="bg-white/95 rounded-lg shadow-xl border-2 border-gold/30 overflow-hidden hover:shadow-2xl transition-shadow flex flex-col">
             {/* Imagen del Convento */}
             <div className="relative h-64 w-full">
               <Image
@@ -44,7 +96,7 @@ export default function EventInfo() {
               />
             </div>
 
-            <div className="p-8 flex flex-col flex-grow">
+            <div className="p-8 flex flex-col flex-grow bg-white">
               <h3 className="font-display text-3xl font-bold text-olive text-center mb-6">
                 Ceremonia
               </h3>
@@ -64,12 +116,12 @@ export default function EventInfo() {
               {/* Botón desplegable para el mapa */}
               <div className="mt-auto pt-6">
                 <button
-                  onClick={handleToggleMaps}
+                  onClick={handleToggleCeremonia}
                   className="w-full bg-gradient-to-r from-olive to-olive-dark text-white font-elegant py-3 px-4 rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   CÓMO LLEGAR A LA CEREMONIA
                   <svg
-                    className={`w-5 h-5 transition-transform duration-600 ${showMaps ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 transition-transform duration-600 ${showCeremoniaMap ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -84,9 +136,9 @@ export default function EventInfo() {
                 </button>
 
                 {/* Contenido desplegable */}
-                {showMaps && (
+                {showCeremoniaMap && (
                   <div
-                    className={`mt-4 border-t border-gold/20 pt-4 ${isClosing ? 'animate-slideUp' : 'animate-slideDown'}`}
+                    className={`mt-4 border-t border-gold/20 pt-4 ${isClosingCeremonia ? 'animate-slideUp' : 'animate-slideDown'}`}
                   >
                     <div className="aspect-video mb-4">
                       <iframe
@@ -114,7 +166,7 @@ export default function EventInfo() {
           </div>
 
           {/* Recepción */}
-          <div className="bg-white rounded-lg shadow-xl border-2 border-gold/30 overflow-hidden hover:shadow-2xl transition-shadow flex flex-col">
+          <div className="bg-white/95 rounded-lg shadow-xl border-2 border-gold/30 overflow-hidden hover:shadow-2xl transition-shadow flex flex-col">
             {/* Imagen del Salón */}
             <div className="relative h-64 w-full">
               <Image
@@ -125,7 +177,7 @@ export default function EventInfo() {
               />
             </div>
 
-            <div className="p-8 flex flex-col flex-grow">
+            <div className="p-8 flex flex-col flex-grow bg-white">
               <h3 className="font-display text-3xl font-bold text-olive text-center mb-6">
                 Recepción
               </h3>
@@ -142,12 +194,12 @@ export default function EventInfo() {
               {/* Botón desplegable para el mapa */}
               <div className="mt-auto pt-6">
                 <button
-                  onClick={handleToggleMaps}
+                  onClick={handleToggleRecepcion}
                   className="w-full bg-gradient-to-r from-olive to-olive-dark text-white font-elegant py-3 px-4 rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   CÓMO LLEGAR A LA RECEPCIÓN
                   <svg
-                    className={`w-5 h-5 transition-transform duration-600 ${showMaps ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 transition-transform duration-600 ${showRecepcionMap ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -162,9 +214,9 @@ export default function EventInfo() {
                 </button>
 
                 {/* Contenido desplegable */}
-                {showMaps && (
+                {showRecepcionMap && (
                   <div
-                    className={`mt-4 border-t border-gold/20 pt-4 ${isClosing ? 'animate-slideUp' : 'animate-slideDown'}`}
+                    className={`mt-4 border-t border-gold/20 pt-4 ${isClosingRecepcion ? 'animate-slideUp' : 'animate-slideDown'}`}
                   >
                     <div className="aspect-video mb-4">
                       <iframe
@@ -191,24 +243,24 @@ export default function EventInfo() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Código de vestimenta */}
-        <div className="mt-12 text-center bg-gradient-to-r from-emerald/10 via-gold/10 to-olive/10 rounded-lg p-8 border-2 border-gold/20">
-          <h3 className="font-display text-2xl font-bold text-olive mb-3">Código de Vestimenta</h3>
-          <p className="font-elegant text-xl text-gray-700 mb-6">Elegante/Sport</p>
+      {/* Código de vestimenta - Ancho completo */}
+      <div className="relative z-20 text-center py-8 border-y-2 border-gold/20 dress-code-gradient">
+        <h3 className="font-display text-2xl font-bold text-olive mb-3">Código de Vestimenta</h3>
+        <p className="font-elegant text-xl text-gray-700 mb-6">Elegante/Sport</p>
 
-          <p className="font-elegant text-xl text-gray-700 font-semibold mb-4">
-            Por favor <span className="font-bold">NO</span> vestir de blanco ni gama de verdes
-          </p>
+        <p className="font-elegant text-xl text-gray-700 font-semibold mb-4">
+          Por favor <span className="font-bold">NO</span> vestir de blanco ni gama de verdes
+        </p>
 
-          {/* Colores a evitar */}
-          <div className="flex items-center justify-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-300 shadow-sm"></div>
-            <div className="w-8 h-8 rounded-full bg-emerald-light shadow-sm"></div>
-            <div className="w-8 h-8 rounded-full bg-emerald shadow-sm"></div>
-            <div className="w-8 h-8 rounded-full bg-emerald-dark shadow-sm"></div>
-            <div className="w-8 h-8 rounded-full bg-olive shadow-sm"></div>
-          </div>
+        {/* Colores a evitar */}
+        <div className="flex items-center justify-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-300 shadow-sm"></div>
+          <div className="w-8 h-8 rounded-full bg-emerald-light shadow-sm"></div>
+          <div className="w-8 h-8 rounded-full bg-emerald shadow-sm"></div>
+          <div className="w-8 h-8 rounded-full bg-emerald-dark shadow-sm"></div>
+          <div className="w-8 h-8 rounded-full bg-olive shadow-sm"></div>
         </div>
       </div>
     </section>
