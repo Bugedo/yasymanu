@@ -86,22 +86,22 @@ export default function RSVPForm() {
   return (
     <section className="relative z-10 py-20 px-4">
       <div className="max-w-2xl mx-auto">
-        {/* Título de confirmar asistencia */}
-        <div className="text-center mb-12">
-          <h2
-            className="font-display text-4xl md:text-5xl font-bold mb-4"
-            style={{ color: '#FAF8F3' }}
-          >
-            Confirmar Asistencia
-          </h2>
-          <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
-        </div>
-
         {/* Formulario de confirmación */}
         <form
           onSubmit={handleSubmit}
           className="mb-12 bg-white/10 backdrop-blur-sm rounded-lg shadow-xl border-2 border-gold/30 p-8"
         >
+          {/* Título de confirmar asistencia */}
+          <div className="text-center mb-8">
+            <h2
+              className="font-display text-4xl md:text-5xl font-bold mb-4"
+              style={{ color: '#FAF8F3' }}
+            >
+              Confirmar Asistencia
+            </h2>
+            <div className="w-24 h-1 bg-gold mx-auto"></div>
+          </div>
+
           <div className="space-y-6">
             {/* Nombre */}
             <div>
