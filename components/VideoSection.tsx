@@ -39,10 +39,16 @@ export default function VideoSection() {
                   controlsList="nodownload nofullscreen noremoteplayback"
                   disablePictureInPicture
                   playsInline
-                  preload="auto"
+                  preload="metadata"
+                  poster="/images/general/videocasamiento.mp4#t=0.1"
                   className="w-full h-auto block"
                   onPause={handleVideoPause}
                   onPlay={handleVideoPlay}
+                  onLoadedMetadata={(e) => {
+                    // Force render first frame
+                    const video = e.currentTarget;
+                    video.currentTime = 0.1;
+                  }}
                 >
                   <source src="/images/general/videocasamiento.mp4" type="video/mp4" />
                   Tu navegador no soporta la reproducción de videos.
