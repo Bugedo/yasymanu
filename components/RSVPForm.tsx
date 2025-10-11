@@ -159,8 +159,8 @@ export default function RSVPForm() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
               >
-                <option value="si">Obvio si 🥂🎊</option>
-                <option value="no">Lamentablemente no puedo 🥹</option>
+                <option value="si">Obvio si</option>
+                <option value="no">Lamentablemente no puedo</option>
                 <option value="despues-cena">Voy después de cena</option>
               </select>
             </div>
@@ -263,8 +263,11 @@ export default function RSVPForm() {
 
                 {/* Restricciones alimentarias */}
                 <div>
-                  <label className="block font-display text-lg font-semibold mb-3" style={{ color: '#FAF8F3' }}>
-                    ¿Alguna restricción alimentaria? Avísanos para que también puedas comer rico 🤤
+                  <label
+                    className="block font-display text-lg font-semibold mb-3"
+                    style={{ color: '#FAF8F3' }}
+                  >
+                    ¿Alguna restricción alimentaria? Avísanos para que también puedas comer rico
                   </label>
                   <div className="space-y-2">
                     {[
@@ -282,7 +285,7 @@ export default function RSVPForm() {
                           type="checkbox"
                           checked={formData.dietaryRestrictions.includes(restriction.value)}
                           onChange={() => handleCheckboxChange(restriction.value)}
-                          className="w-5 h-5 rounded border-2 border-gold/30 text-emerald focus:ring-2 focus:ring-emerald"
+                          className="w-5 h-5 rounded-full border-2 border-gold/30 text-emerald focus:ring-2 focus:ring-emerald"
                         />
                         <span className="font-elegant text-base" style={{ color: '#FAF8F3' }}>
                           {restriction.label}
