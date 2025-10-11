@@ -1,5 +1,6 @@
 import FixedBackground from '@/components/FixedBackground';
 import Hero from '@/components/Hero';
+import VideoSection from '@/components/VideoSection';
 import EventInfo from '@/components/EventInfo';
 import RSVPForm from '@/components/RSVPForm';
 import GiftList from '@/components/GiftList';
@@ -10,6 +11,7 @@ export default function Home() {
     <main className="min-h-screen">
       <FixedBackground />
       <Hero />
+      <VideoSection />
       <EventInfo />
       <RSVPForm />
       <GiftList />
