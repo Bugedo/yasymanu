@@ -195,10 +195,20 @@ export default function EventInfo() {
         {/* Código de vestimenta */}
         <div className="mt-12 text-center bg-gradient-to-r from-emerald/10 via-gold/10 to-olive/10 rounded-lg p-8 border-2 border-gold/20">
           <h3 className="font-display text-2xl font-bold text-olive mb-3">Código de Vestimenta</h3>
-          <p className="font-elegant text-xl text-gray-700">Formal / Elegante</p>
-          <p className="font-elegant text-sm text-gray-500 mt-2">
-            Por favor, evita vestir de blanco
+          <p className="font-elegant text-xl text-gray-700 mb-6">Elegante/Sport</p>
+
+          <p className="font-elegant text-xl text-gray-700 font-semibold mb-4">
+            Por favor <span className="font-bold">NO</span> vestir de blanco ni gama de verdes
           </p>
+
+          {/* Colores a evitar */}
+          <div className="flex items-center justify-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-300 shadow-sm"></div>
+            <div className="w-8 h-8 rounded-full bg-emerald-light shadow-sm"></div>
+            <div className="w-8 h-8 rounded-full bg-emerald shadow-sm"></div>
+            <div className="w-8 h-8 rounded-full bg-emerald-dark shadow-sm"></div>
+            <div className="w-8 h-8 rounded-full bg-olive shadow-sm"></div>
+          </div>
         </div>
       </div>
     </section>

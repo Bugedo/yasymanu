@@ -10,11 +10,11 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       <Hero />
-      <Countdown />
       <Gallery />
       <EventInfo />
       <RSVPForm />
       <GiftList />
+      <Countdown />
       <Footer />
     </main>
   );
