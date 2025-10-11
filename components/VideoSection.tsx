@@ -36,8 +36,10 @@ export default function VideoSection() {
                 <video
                   ref={videoRef}
                   controls={showControls}
+                  controlsList="nodownload nofullscreen noremoteplayback"
+                  disablePictureInPicture
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                   className="w-full h-auto block"
                   onPause={handleVideoPause}
                   onPlay={handleVideoPlay}
@@ -46,11 +48,11 @@ export default function VideoSection() {
                   Tu navegador no soporta la reproducción de videos.
                 </video>
 
-                {/* Botón de Play Grande */}
+                {/* Botón de Play Grande - sin blur en el fondo */}
                 {!isPlaying && (
                   <button
                     onClick={handlePlayClick}
-                    className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-opacity hover:bg-black/40 cursor-pointer group"
+                    className="absolute inset-0 flex items-center justify-center transition-opacity cursor-pointer group"
                     aria-label="Reproducir video"
                   >
                     <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/90 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
