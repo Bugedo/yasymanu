@@ -151,6 +151,53 @@ body {
     white;
 }
 
+/* Gradiente para valor de tarjeta */
+.payment-gradient {
+  background:
+    linear-gradient(
+      to right,
+      rgba(80, 200, 120, 0.1),
+      rgba(212, 175, 55, 0.1),
+      rgba(112, 130, 56, 0.1)
+    ),
+    white;
+}
+
+/* Animación para el icono de regalo */
+@keyframes giftBounce {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  25% {
+    transform: translateY(-15px) scale(1.1);
+  }
+  50% {
+    transform: translateY(0px) scale(1.05);
+  }
+  75% {
+    transform: translateY(-8px) scale(1.08);
+  }
+}
+
+@keyframes giftPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.animate-gift-bounce {
+  animation: giftBounce 2.5s ease-in-out infinite;
+}
+
+.animate-gift-pulse {
+  animation: giftPulse 1.5s ease-in-out infinite;
+}
+
 /* Personalización de controles de video - ocultar botones de adelantar/retroceder */
 video::-webkit-media-controls-seek-back-button,
 video::-webkit-media-controls-seek-forward-button,
