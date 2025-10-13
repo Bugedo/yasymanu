@@ -3,24 +3,10 @@ import { google } from 'googleapis';
 
 export async function GET() {
   try {
-    // Decodificar credenciales desde base64 o usar variables individuales
-    let credentials;
-    if (process.env.GOOGLE_CREDENTIALS_BASE64) {
-      const credentialsJson = Buffer.from(
-        process.env.GOOGLE_CREDENTIALS_BASE64,
-        'base64'
-      ).toString('utf-8');
-      credentials = JSON.parse(credentialsJson);
-    } else {
-      credentials = {
-        client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-      };
-    }
-
-    // Configurar autenticación
-    const auth = new google.auth.GoogleAuth({
-      credentials,
+    // Configurar autenticación con JWT (método recomendado)
+    const auth = new google.auth.JWT({
+      email: process.env.GOOGLE_CLIENT_EMAIL,
+      key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     });
 
