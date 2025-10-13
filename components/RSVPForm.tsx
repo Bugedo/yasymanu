@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function RSVPForm() {
   const [precioAdulto, setPrecioAdulto] = useState(134500); // Precio por defecto
@@ -85,8 +86,7 @@ export default function RSVPForm() {
     const menores2a10 = parseInt(formData.menores2a10) || 0;
     const precioMenor2a10 = precioAdulto * 0.5;
 
-    // Menores de 2 años: gratis (no cuenta)
-    const menoresDe2 = parseInt(formData.menoresDe2) || 0;
+    // Menores de 2 años: gratis (no cuenta en el cálculo)
 
     // Calcular costo total
     const cost = totalPrecioCompleto * precioAdulto + menores2a10 * precioMenor2a10;
@@ -174,31 +174,36 @@ export default function RSVPForm() {
           <div className="max-w-2xl mx-auto">
             <div className="mb-12 bg-white/10 backdrop-blur-sm rounded-lg shadow-xl border-2 border-gold/30 p-8">
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-emerald to-olive rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg
-                    className="w-10 h-10 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                {/* Imagen con marco estilo video */}
+                <div className="mb-8 flex justify-center">
+                  <div className="w-full max-w-sm md:max-w-md">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl border-2 border-gold/40 p-3 md:p-4">
+                      <div className="relative rounded-xl overflow-hidden shadow-lg">
+                        <Image
+                          src="/images/general/graciasform.jpg"
+                          alt="Gracias por confirmar"
+                          width={800}
+                          height={600}
+                          className="w-full h-auto object-cover"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="font-display text-3xl font-bold mb-4" style={{ color: '#FAF8F3' }}>
+
+                <h3 className="font-display text-3xl font-bold mb-2" style={{ color: '#FAF8F3' }}>
                   ¡Gracias por confirmar!
                 </h3>
+                <p className="font-elegant text-xl mb-6" style={{ color: '#FAF8F3' }}>
+                  Te esperamos el 7 de noviembre
+                </p>
 
                 {totalCost > 0 && (
                   <div className="mt-6 p-6 bg-white rounded-lg shadow-md border-2 border-gold/20">
                     <h4 className="font-display text-2xl font-bold text-olive mb-2">
                       Total a Pagar
                     </h4>
-                    <p className="font-display text-4xl font-bold text-emerald mb-4">
+                    <p className="font-display text-4xl font-bold text-olive mb-4">
                       ${totalCost.toLocaleString('es-AR')}
                     </p>
                     <p className="font-elegant text-base text-gray-600">

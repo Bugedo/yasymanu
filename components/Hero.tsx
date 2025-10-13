@@ -35,8 +35,16 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative z-10 min-h-screen flex items-center justify-center">
-      <div className="text-center px-4 max-w-4xl mx-auto">
+    <section className="relative z-[5] min-h-screen flex items-center justify-center">
+      {/* Imagen de fondo - se mueve con el scroll */}
+      <div className="absolute inset-0 overflow-hidden z-0">
+        <div
+          className="absolute inset-0 bg-[url('/images/hero/yasmanufinal.jpg')] bg-cover opacity-30"
+          style={{ backgroundPosition: '55% 25%' }}
+        ></div>
+      </div>
+
+      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         {/* Ornamento superior */}
         <div className="mb-8 flex justify-center">
           <svg width="100" height="20" viewBox="0 0 100 20" className="text-gold fill-current">
