@@ -11,7 +11,7 @@ export default function Footer() {
 
         {/* Mensaje principal */}
         <h3 className="font-display text-3xl md:text-4xl font-bold mb-8 text-gold">
-          Yasmin & Manuel
+          Yas <span className="text-2xl md:text-3xl">&</span> Manu
         </h3>
 
         {/* Información de contacto */}

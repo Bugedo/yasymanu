@@ -49,12 +49,17 @@ export default function Hero() {
           className="font-display text-6xl md:text-8xl font-bold mb-4 tracking-wide"
           style={{ color: '#FAF8F3' }}
         >
-          Yasmin & Manuel
+          Yas <span className="text-5xl md:text-7xl">&</span> Manu
         </h1>
 
         <div className="my-8">
           <div className="w-16 h-px bg-gold mx-auto"></div>
         </div>
+
+        {/* Fecha */}
+        <p className="font-elegant text-2xl md:text-3xl mb-6" style={{ color: '#FAF8F3' }}>
+          7 de Noviembre 2026
+        </p>
 
         {/* Cuenta regresiva simple */}
         <div className="flex justify-center gap-4 md:gap-8 mb-8">
