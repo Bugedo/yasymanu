@@ -2,33 +2,32 @@
 
 import { useState, useEffect } from 'react';
 
+// 7 de Noviembre 2026, 20:00 hora de Buenos Aires (UTC-3)
+const weddingDate = new Date('2026-11-07T20:00:00-03:00').getTime();
+
+const calculateTimeLeft = () => {
+  const now = new Date().getTime();
+  const distance = weddingDate - now;
+
+  if (distance < 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  return {
+    days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((distance % (1000 * 60)) / 1000),
+  };
+};
+
 export default function Hero() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  // Calcular el tiempo inicial inmediatamente
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    // 7 de Noviembre 2026, 20:00 hora de Buenos Aires (UTC-3)
-    const weddingDate = new Date('2026-11-07T20:00:00-03:00').getTime();
-
     const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = weddingDate - now;
-
-      if (distance < 0) {
-        clearInterval(timer);
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
-      });
+      setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     return () => clearInterval(timer);
@@ -46,7 +45,7 @@ export default function Hero() {
 
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         {/* Ornamento superior */}
-        <div className="mb-8 flex justify-center">
+        <div className="mb-8 flex justify-center animate-fade-in">
           <svg width="100" height="20" viewBox="0 0 100 20" className="text-gold fill-current">
             <path d="M50 0 L55 10 L50 20 L45 10 Z M30 5 L35 10 L30 15 L25 10 Z M70 5 L75 10 L70 15 L65 10 Z" />
           </svg>
@@ -54,23 +53,26 @@ export default function Hero() {
 
         {/* Nombres de los novios */}
         <h1
-          className="text-7xl md:text-9xl mb-4"
+          className="text-7xl md:text-9xl mb-4 animate-fade-in-delay-1"
           style={{ color: '#FAF8F3', fontFamily: "'Parisienne', cursive", fontWeight: 400 }}
         >
           Yas & Manu
         </h1>
 
-        <div className="my-8">
+        <div className="my-8 animate-fade-in-delay-2">
           <div className="w-16 h-px bg-gold mx-auto"></div>
         </div>
 
         {/* Fecha */}
-        <p className="font-elegant text-2xl md:text-3xl mb-6" style={{ color: '#FAF8F3' }}>
+        <p
+          className="font-elegant text-2xl md:text-3xl mb-6 animate-fade-in-delay-3"
+          style={{ color: '#FAF8F3' }}
+        >
           7 de Noviembre 2026
         </p>
 
         {/* Cuenta regresiva simple */}
-        <div className="flex justify-center gap-4 md:gap-8 mb-8">
+        <div className="flex justify-center gap-4 md:gap-8 mb-8 animate-fade-in-delay-4">
           <div className="text-center">
             <div className="font-display text-4xl md:text-5xl" style={{ color: '#FAF8F3' }}>
               {String(timeLeft.days).padStart(2, '0')}
@@ -125,21 +127,21 @@ export default function Hero() {
 
         {/* Mensaje */}
         <p
-          className="font-elegant text-xl md:text-2xl italic max-w-2xl mx-auto"
+          className="font-elegant text-xl md:text-2xl italic max-w-2xl mx-auto animate-fade-in-delay-5"
           style={{ color: '#FAF8F3' }}
         >
           Nuestro éxito es el amor que nos rodea y queremos que formes parte de él en nuestra boda
         </p>
 
         {/* Ornamento inferior */}
-        <div className="mt-12 flex justify-center">
+        <div className="mt-12 flex justify-center animate-fade-in-delay-6">
           <svg width="100" height="20" viewBox="0 0 100 20" className="text-gold fill-current">
             <path d="M50 0 L55 10 L50 20 L45 10 Z M30 5 L35 10 L30 15 L25 10 Z M70 5 L75 10 L70 15 L65 10 Z" />
           </svg>
         </div>
 
         {/* Flecha de scroll */}
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex justify-center animate-fade-in-delay-7">
           <div className="animate-bounce">
             <svg
               className="w-6 h-6 text-gold"
