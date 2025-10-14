@@ -44,13 +44,14 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ success: true, message: 'Datos guardados correctamente' });
-  } catch (error: any) {
-    console.error('Error al guardar en Google Sheets:', error);
-    console.error('Error name:', error?.name);
-    console.error('Error message:', error?.message);
-    console.error('Error stack:', error?.stack);
+  } catch (error) {
+    const err = error as Error;
+    console.error('Error al guardar en Google Sheets:', err);
+    console.error('Error name:', err?.name);
+    console.error('Error message:', err?.message);
+    console.error('Error stack:', err?.stack);
     return NextResponse.json(
-      { success: false, message: 'Error al guardar los datos', error: error?.message },
+      { success: false, message: 'Error al guardar los datos', error: err?.message },
       { status: 500 },
     );
   }
