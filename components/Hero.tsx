@@ -53,10 +53,10 @@ export default function Hero() {
 
         {/* Nombres de los novios */}
         <h1
-          className="text-7xl md:text-9xl mb-4 animate-fade-in-delay-1"
+          className="text-6xl md:text-9xl mb-4 animate-fade-in-delay-1"
           style={{ color: '#FAF8F3', fontFamily: "'Parisienne', cursive", fontWeight: 400 }}
         >
-          Yas & Manu
+          Yas <span className="text-5xl md:text-8xl">&</span> Manu
         </h1>
 
         <div className="my-8 animate-fade-in-delay-2">
