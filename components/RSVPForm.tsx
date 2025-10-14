@@ -439,18 +439,21 @@ export default function RSVPForm() {
                           >
                             ¿Cuántos serían en total? *
                           </label>
-                          <input
-                            type="number"
+                          <select
                             id="totalGuests"
                             name="totalGuests"
-                            min="2"
-                            max="15"
                             required
                             value={formData.totalGuests}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                            placeholder="Número total de personas (incluyéndote)"
-                          />
+                          >
+                            <option value="">Seleccioná la cantidad</option>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                              <option key={num} value={num.toString()}>
+                                {num} {num === 1 ? 'persona' : 'personas'}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                       )}
 
@@ -464,108 +467,125 @@ export default function RSVPForm() {
                           >
                             Mayores de 18 años *
                           </label>
-                          <input
-                            type="number"
+                          <select
                             id="adultos18"
                             name="adultos18"
-                            min="1"
-                            max="15"
                             required
                             value={formData.adultos18}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                            placeholder="Cantidad de mayores de 18"
-                          />
+                          >
+                            <option value="">Seleccioná la cantidad</option>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                              <option key={num} value={num.toString()}>
+                                {num} {num === 1 ? 'adulto' : 'adultos'}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                       )}
 
-                      {/* ¿Venís con menores? */}
-                      <div>
-                        <label
-                          htmlFor="withMinors"
-                          className="block font-display text-lg font-semibold mb-2"
-                          style={{ color: '#FAF8F3' }}
-                        >
-                          ¿Venís con menores? *
-                        </label>
-                        <select
-                          id="withMinors"
-                          name="withMinors"
-                          required
-                          value={formData.withMinors}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                        >
-                          <option value="no">No</option>
-                          <option value="si">Sí</option>
-                        </select>
-                      </div>
-
-                      {/* Campos de menores desglosados */}
-                      {formData.withMinors === 'si' && (
+                      {/* Sección de menores - Solo si va acompañado */}
+                      {formData.withCompanion === 'si' && (
                         <>
+                          {/* ¿Venís con menores? */}
                           <div>
                             <label
-                              htmlFor="menores10a17"
+                              htmlFor="withMinors"
                               className="block font-display text-lg font-semibold mb-2"
                               style={{ color: '#FAF8F3' }}
                             >
-                              Menores de 10 a 17 años (100% - ${formatPrice(precioAdulto)})
+                              ¿Venís con menores? *
                             </label>
-                            <input
-                              type="number"
-                              id="menores10a17"
-                              name="menores10a17"
-                              min="0"
-                              max="10"
-                              value={formData.menores10a17}
+                            <select
+                              id="withMinors"
+                              name="withMinors"
+                              required
+                              value={formData.withMinors}
                               onChange={handleChange}
                               className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                              placeholder="Cantidad de menores de 10-17 años"
-                            />
+                            >
+                              <option value="no">No</option>
+                              <option value="si">Sí</option>
+                            </select>
                           </div>
 
-                          <div>
-                            <label
-                              htmlFor="menores2a10"
-                              className="block font-display text-lg font-semibold mb-2"
-                              style={{ color: '#FAF8F3' }}
-                            >
-                              Menores de 2 a 10 años (50% - ${formatPrice(precioAdulto * 0.5)})
-                            </label>
-                            <input
-                              type="number"
-                              id="menores2a10"
-                              name="menores2a10"
-                              min="0"
-                              max="10"
-                              value={formData.menores2a10}
-                              onChange={handleChange}
-                              className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                              placeholder="Cantidad de menores de 2-10 años"
-                            />
-                          </div>
+                          {/* Campos de menores desglosados */}
+                          {formData.withMinors === 'si' && (
+                            <>
+                              <div>
+                                <label
+                                  htmlFor="menores10a17"
+                                  className="block font-display text-lg font-semibold mb-2"
+                                  style={{ color: '#FAF8F3' }}
+                                >
+                                  Menores de 10 a 17 años (100% - ${formatPrice(precioAdulto)})
+                                </label>
+                                <select
+                                  id="menores10a17"
+                                  name="menores10a17"
+                                  value={formData.menores10a17}
+                                  onChange={handleChange}
+                                  className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
+                                >
+                                  <option value="">Ninguno</option>
+                                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                                    <option key={num} value={num.toString()}>
+                                      {num}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
 
-                          <div>
-                            <label
-                              htmlFor="menoresDe2"
-                              className="block font-display text-lg font-semibold mb-2"
-                              style={{ color: '#FAF8F3' }}
-                            >
-                              Menores de 2 años (Sin Costo)
-                            </label>
-                            <input
-                              type="number"
-                              id="menoresDe2"
-                              name="menoresDe2"
-                              min="0"
-                              max="10"
-                              value={formData.menoresDe2}
-                              onChange={handleChange}
-                              className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
-                              placeholder="Cantidad de menores de 2 años"
-                            />
-                          </div>
+                              <div>
+                                <label
+                                  htmlFor="menores2a10"
+                                  className="block font-display text-lg font-semibold mb-2"
+                                  style={{ color: '#FAF8F3' }}
+                                >
+                                  Menores de 2 a 10 años (50% - ${formatPrice(precioAdulto * 0.5)})
+                                </label>
+                                <select
+                                  id="menores2a10"
+                                  name="menores2a10"
+                                  value={formData.menores2a10}
+                                  onChange={handleChange}
+                                  className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
+                                >
+                                  <option value="">Ninguno</option>
+                                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                                    <option key={num} value={num.toString()}>
+                                      {num}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+
+                              <div>
+                                <label
+                                  htmlFor="menoresDe2"
+                                  className="block font-display text-lg font-semibold mb-2"
+                                  style={{ color: '#FAF8F3' }}
+                                >
+                                  Menores de 2 años (Sin Costo)
+                                </label>
+                                <select
+                                  id="menoresDe2"
+                                  name="menoresDe2"
+                                  value={formData.menoresDe2}
+                                  onChange={handleChange}
+                                  className="w-full px-4 py-3 border-2 border-gold/30 rounded-lg focus:outline-none focus:border-emerald font-elegant text-gray-700 bg-white"
+                                >
+                                  <option value="">Ninguno</option>
+                                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                                    <option key={num} value={num.toString()}>
+                                      {num}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
 

@@ -76,7 +76,7 @@ export default function Hero() {
           className="text-4xl md:text-5xl mb-4 animate-fade-in-delay-3"
           style={{ color: '#FAF8F3', fontFamily: "'Parisienne', cursive", fontWeight: 400 }}
         >
-          NOS CASAMOS
+          Nos Casamos
         </p>
 
         {/* Fecha */}
