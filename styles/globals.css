@@ -266,3 +266,8 @@ video::-webkit-media-controls-volume-slider {
   animation: fadeIn 1s ease-out 1.4s forwards;
   opacity: 0;
 }
+
+.animate-fade-in-delay-8 {
+  animation: fadeIn 1s ease-out 1.6s forwards;
+  opacity: 0;
+}

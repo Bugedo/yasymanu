@@ -71,16 +71,24 @@ export default function Hero() {
           <div className="w-16 h-px bg-gold mx-auto"></div>
         </div>
 
+        {/* Nos Casamos */}
+        <p
+          className="text-4xl md:text-5xl mb-4 animate-fade-in-delay-3"
+          style={{ color: '#FAF8F3', fontFamily: "'Parisienne', cursive", fontWeight: 400 }}
+        >
+          NOS CASAMOS
+        </p>
+
         {/* Fecha */}
         <p
-          className="font-elegant text-2xl md:text-3xl mb-6 animate-fade-in-delay-3"
+          className="font-elegant text-2xl md:text-3xl mb-6 animate-fade-in-delay-4"
           style={{ color: '#FAF8F3' }}
         >
           7 de Noviembre 2026
         </p>
 
         {/* Cuenta regresiva simple */}
-        <div className="flex justify-center gap-4 md:gap-8 mb-8 animate-fade-in-delay-4">
+        <div className="flex justify-center gap-4 md:gap-8 mb-8 animate-fade-in-delay-5">
           <div className="text-center">
             <div className="font-display text-4xl md:text-5xl" style={{ color: '#FAF8F3' }}>
               {timeLeft ? String(timeLeft.days).padStart(2, '0') : '00'}
@@ -135,21 +143,21 @@ export default function Hero() {
 
         {/* Mensaje */}
         <p
-          className="font-elegant text-xl md:text-2xl italic max-w-2xl mx-auto animate-fade-in-delay-5"
+          className="font-elegant text-xl md:text-2xl italic max-w-2xl mx-auto animate-fade-in-delay-6"
           style={{ color: '#FAF8F3' }}
         >
           Nuestro éxito es el amor que nos rodea y queremos que formes parte de él en nuestra boda
         </p>
 
         {/* Ornamento inferior */}
-        <div className="mt-12 flex justify-center animate-fade-in-delay-6">
+        <div className="mt-12 flex justify-center animate-fade-in-delay-7">
           <svg width="100" height="20" viewBox="0 0 100 20" className="text-gold fill-current">
             <path d="M50 0 L55 10 L50 20 L45 10 Z M30 5 L35 10 L30 15 L25 10 Z M70 5 L75 10 L70 15 L65 10 Z" />
           </svg>
         </div>
 
         {/* Flecha de scroll */}
-        <div className="mt-8 flex justify-center animate-fade-in-delay-7">
+        <div className="mt-8 flex justify-center animate-fade-in-delay-8">
           <div className="animate-bounce">
             <svg
               className="w-6 h-6 text-gold"
