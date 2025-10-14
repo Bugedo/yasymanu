@@ -1,10 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 export default function RSVPForm() {
   const [precioAdulto, setPrecioAdulto] = useState(134500); // Precio por defecto
+  const [priceValidMonth, setPriceValidMonth] = useState('valor del mes corriente'); // Mes de validez del precio (viene de S2)
+  const [priceDataReady, setPriceDataReady] = useState(false); // Estado para saber si los datos del precio están listos
+
+  // Función para capitalizar la primera letra
+  const capitalizeMonth = (dateStr: string) => {
+    if (!dateStr) return 'Valor del mes corriente';
+    return dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     attending: 'si',
@@ -20,14 +29,15 @@ export default function RSVPForm() {
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [totalCost, setTotalCost] = useState(0);
+  const [finalCost, setFinalCost] = useState<number | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [showPaymentData, setShowPaymentData] = useState(false);
   const [isClosingPayment, setIsClosingPayment] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const thankYouRef = useRef<HTMLDivElement>(null);
 
-  // Obtener el precio desde Google Sheets al cargar el componente
+  // Obtener el precio y mes de validez desde Google Sheets al cargar el componente
   useEffect(() => {
     const fetchPrice = async () => {
       try {
@@ -36,14 +46,33 @@ export default function RSVPForm() {
         if (data.price) {
           setPrecioAdulto(data.price);
         }
+        if (data.validUntil) {
+          setPriceValidMonth(data.validUntil);
+        }
       } catch (error) {
         console.error('Error al obtener el precio:', error);
         // Si hay error, mantener el precio por defecto
+      } finally {
+        // Marcar que los datos están listos después de 1 segundo
+        setTimeout(() => {
+          setPriceDataReady(true);
+        }, 1000);
       }
     };
 
     fetchPrice();
   }, []);
+
+  // Auto-completar con 1 invitado cuando va solo
+  useEffect(() => {
+    if (formData.withCompanion === 'no' && formData.totalGuests === '') {
+      setFormData((prev) => ({
+        ...prev,
+        totalGuests: '1',
+        adultos18: '1',
+      }));
+    }
+  }, [formData.withCompanion, formData.totalGuests]);
 
   // Función para formatear el precio
   const formatPrice = (price: number) => {
@@ -99,20 +128,42 @@ export default function RSVPForm() {
     setError(null);
 
     try {
+      // Validar que el total de invitados coincida con la suma de categorías
+      const totalDeclared = parseInt(formData.totalGuests) || 0;
+      const adultos = parseInt(formData.adultos18) || 0;
+      const menores10a17 = parseInt(formData.menores10a17) || 0;
+      const menores2a10 = parseInt(formData.menores2a10) || 0;
+      const menoresDe2 = parseInt(formData.menoresDe2) || 0;
+      const sumaCategorias = adultos + menores10a17 + menores2a10 + menoresDe2;
+
+      if (formData.attending === 'si' && totalDeclared !== sumaCategorias) {
+        const diferencia = totalDeclared - sumaCategorias;
+        if (diferencia > 0) {
+          setError(
+            `El total de invitados no coincide. Declaraste ${totalDeclared} invitado${totalDeclared !== 1 ? 's' : ''}, pero la suma de las categorías es ${sumaCategorias}. Faltan ${diferencia} invitado${diferencia !== 1 ? 's' : ''} por agregar.`,
+          );
+        } else {
+          setError(
+            `El total de invitados no coincide. Declaraste ${totalDeclared} invitado${totalDeclared !== 1 ? 's' : ''}, pero la suma de las categorías es ${sumaCategorias}. Hay ${Math.abs(diferencia)} invitado${Math.abs(diferencia) !== 1 ? 's' : ''} de más.`,
+          );
+        }
+        setIsSubmitting(false);
+        return;
+      }
+
       // Calcular el costo total
       const cost = calculateTotalCost();
-      setTotalCost(cost);
 
       // Preparar datos para guardar en Google Sheets
       const dataToSave = {
         nombre: formData.name,
         asistencia: formData.attending,
         acompaniado: formData.withCompanion,
-        total_invitados: parseInt(formData.totalGuests) || 1,
-        adultos_18_mas: parseInt(formData.adultos18) || 0,
-        menores_10_17: parseInt(formData.menores10a17) || 0,
-        menores_2_10: parseInt(formData.menores2a10) || 0,
-        menores_de_2: parseInt(formData.menoresDe2) || 0,
+        total_invitados: totalDeclared,
+        adultos_18_mas: adultos,
+        menores_10_17: menores10a17,
+        menores_2_10: menores2a10,
+        menores_de_2: menoresDe2,
         restricciones_alimentarias: formData.dietaryRestrictions.join(', '),
         otra_restriccion: formData.otherRestriction,
         costo_total: cost,
@@ -133,7 +184,22 @@ export default function RSVPForm() {
       }
 
       console.log('Datos guardados exitosamente:', dataToSave);
-      setSubmitted(true);
+
+      // Guardar el costo final primero
+      setFinalCost(cost);
+
+      // Esperar a que React procese el estado y LUEGO mostrar el mensaje
+      requestAnimationFrame(() => {
+        setSubmitted(true);
+
+        // Scroll suave al mensaje de agradecimiento
+        setTimeout(() => {
+          thankYouRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
+        }, 100);
+      });
     } catch (err) {
       console.error('Error:', err);
       setError('Hubo un error al guardar tu confirmación. Por favor, intenta nuevamente.');
@@ -145,10 +211,25 @@ export default function RSVPForm() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Si cambia withCompanion a 'no', automáticamente setear 1 invitado (él mismo)
+    if (name === 'withCompanion' && value === 'no') {
+      setFormData({
+        ...formData,
+        [name]: value,
+        totalGuests: '1',
+        adultos18: '1',
+        menores10a17: '',
+        menores2a10: '',
+        menoresDe2: '',
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleCheckboxChange = (value: string) => {
@@ -166,11 +247,16 @@ export default function RSVPForm() {
     }
   };
 
+  // No renderizar el formulario hasta tener los datos del precio listos
+  if (!priceDataReady && !submitted) {
+    return null; // O un loader sutil mientras carga
+  }
+
   return (
     <>
-      {submitted ? (
-        // Mensaje de confirmación
-        <section className="relative z-10 py-20 px-4">
+      {submitted && finalCost !== null ? (
+        // Mensaje de confirmación - SOLO se muestra si finalCost está disponible
+        <section className="relative z-10 py-20 px-4" ref={thankYouRef}>
           <div className="max-w-2xl mx-auto">
             <div className="mb-12 bg-white/10 backdrop-blur-sm rounded-lg shadow-xl border-2 border-gold/30 p-8">
               <div className="text-center">
@@ -198,16 +284,19 @@ export default function RSVPForm() {
                   Te esperamos el 7 de noviembre
                 </p>
 
-                {totalCost > 0 && (
+                {finalCost > 0 && (
                   <div className="mt-6 p-6 bg-white rounded-lg shadow-md border-2 border-gold/20">
                     <h4 className="font-display text-2xl font-bold text-olive mb-2">
                       Total a Pagar
                     </h4>
                     <p className="font-display text-4xl font-bold text-olive mb-4">
-                      ${totalCost.toLocaleString('es-AR')}
+                      ${finalCost.toLocaleString('es-AR')}
                     </p>
                     <p className="font-elegant text-base text-gray-600">
                       Más abajo encontrarás los datos bancarios para realizar la transferencia.
+                    </p>
+                    <p className="font-elegant text-sm text-gray-500 mt-3">
+                      Precio válido durante el mes de {capitalizeMonth(priceValidMonth)}
                     </p>
                   </div>
                 )}
@@ -245,7 +334,7 @@ export default function RSVPForm() {
                     VALOR TARJETA
                   </h3>
                   <p className="font-elegant text-lg md:text-xl mb-3" style={{ color: '#FAF8F3' }}>
-                    Precio Octubre 2025
+                    Precio {capitalizeMonth(priceValidMonth)}
                   </p>
                   <p
                     className="font-display text-3xl md:text-4xl font-bold mb-3"

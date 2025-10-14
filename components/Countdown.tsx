@@ -22,9 +22,18 @@ const calculateTimeLeft = () => {
 };
 
 export default function Countdown() {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  // Inicializar con null para evitar hydration mismatch
+  const [timeLeft, setTimeLeft] = useState<{
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  } | null>(null);
 
   useEffect(() => {
+    // Calcular inmediatamente en el cliente
+    setTimeLeft(calculateTimeLeft());
+
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
@@ -43,7 +52,7 @@ export default function Countdown() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-emerald/10 to-olive/10 rounded-lg p-6 md:p-8 border-2 border-gold/20 shadow-lg">
             <div className="font-display text-5xl md:text-6xl font-bold text-olive mb-2">
-              {timeLeft.days}
+              {timeLeft ? timeLeft.days : 0}
             </div>
             <div className="font-elegant text-lg md:text-xl text-olive-light uppercase tracking-wider">
               Días
@@ -52,7 +61,7 @@ export default function Countdown() {
 
           <div className="bg-gradient-to-br from-emerald/10 to-olive/10 rounded-lg p-6 md:p-8 border-2 border-gold/20 shadow-lg">
             <div className="font-display text-5xl md:text-6xl font-bold text-olive mb-2">
-              {timeLeft.hours}
+              {timeLeft ? timeLeft.hours : 0}
             </div>
             <div className="font-elegant text-lg md:text-xl text-olive-light uppercase tracking-wider">
               Horas
@@ -61,7 +70,7 @@ export default function Countdown() {
 
           <div className="bg-gradient-to-br from-emerald/10 to-olive/10 rounded-lg p-6 md:p-8 border-2 border-gold/20 shadow-lg">
             <div className="font-display text-5xl md:text-6xl font-bold text-olive mb-2">
-              {timeLeft.minutes}
+              {timeLeft ? timeLeft.minutes : 0}
             </div>
             <div className="font-elegant text-lg md:text-xl text-olive-light uppercase tracking-wider">
               Minutos
@@ -70,7 +79,7 @@ export default function Countdown() {
 
           <div className="bg-gradient-to-br from-emerald/10 to-olive/10 rounded-lg p-6 md:p-8 border-2 border-gold/20 shadow-lg">
             <div className="font-display text-5xl md:text-6xl font-bold text-olive mb-2">
-              {timeLeft.seconds}
+              {timeLeft ? timeLeft.seconds : 0}
             </div>
             <div className="font-elegant text-lg md:text-xl text-olive-light uppercase tracking-wider">
               Segundos

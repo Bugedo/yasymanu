@@ -69,27 +69,32 @@ export async function appendRSVPToSheet(data: {
   }
 }
 
-export async function getPriceFromSheet(): Promise<number> {
+export async function getPriceFromSheet(): Promise<{ price: number; validUntil: string }> {
   try {
     const sheets = await getGoogleSheetsClient();
     const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
+    // Leer precio (R2) y fecha válida hasta (S2) en una sola llamada
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId,
-      range: 'Confirmaciones!R2',
+      range: 'Confirmaciones!R2:S2',
     });
 
-    const price = response.data.values?.[0]?.[0];
+    const values = response.data.values?.[0];
+    const price = values?.[0];
+    const validUntil = values?.[1];
 
     if (!price) {
-      return 134500; // Precio por defecto
+      return { price: 134500, validUntil: 'valor del mes corriente' };
     }
 
     const numericPrice = parseInt(price.toString().replace(/[^0-9]/g, ''));
-    return numericPrice;
+    return {
+      price: numericPrice,
+      validUntil: validUntil?.toString() || 'valor del mes corriente',
+    };
   } catch (error) {
     console.error('Error al leer precio:', error);
-    return 134500; // Precio por defecto en caso de error
+    return { price: 134500, validUntil: 'valor del mes corriente' };
   }
 }
-

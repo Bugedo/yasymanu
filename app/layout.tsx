@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Yas y Manu - Invitación de Boda',
+  title: 'Yas y Manu',
   description: 'Te invitamos a celebrar con nosotros este día tan especial',
   icons: {
     icon: [

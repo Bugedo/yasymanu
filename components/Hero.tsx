@@ -22,10 +22,18 @@ const calculateTimeLeft = () => {
 };
 
 export default function Hero() {
-  // Calcular el tiempo inicial inmediatamente
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  // Inicializar con null para evitar hydration mismatch
+  const [timeLeft, setTimeLeft] = useState<{
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  } | null>(null);
 
   useEffect(() => {
+    // Calcular inmediatamente en el cliente
+    setTimeLeft(calculateTimeLeft());
+
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
@@ -75,7 +83,7 @@ export default function Hero() {
         <div className="flex justify-center gap-4 md:gap-8 mb-8 animate-fade-in-delay-4">
           <div className="text-center">
             <div className="font-display text-4xl md:text-5xl" style={{ color: '#FAF8F3' }}>
-              {String(timeLeft.days).padStart(2, '0')}
+              {timeLeft ? String(timeLeft.days).padStart(2, '0') : '00'}
             </div>
             <div className="font-elegant text-sm md:text-base mt-1" style={{ color: '#FAF8F3' }}>
               Días
@@ -89,7 +97,7 @@ export default function Hero() {
           </div>
           <div className="text-center">
             <div className="font-display text-4xl md:text-5xl" style={{ color: '#FAF8F3' }}>
-              {String(timeLeft.hours).padStart(2, '0')}
+              {timeLeft ? String(timeLeft.hours).padStart(2, '0') : '00'}
             </div>
             <div className="font-elegant text-sm md:text-base mt-1" style={{ color: '#FAF8F3' }}>
               Horas
@@ -103,7 +111,7 @@ export default function Hero() {
           </div>
           <div className="text-center">
             <div className="font-display text-4xl md:text-5xl" style={{ color: '#FAF8F3' }}>
-              {String(timeLeft.minutes).padStart(2, '0')}
+              {timeLeft ? String(timeLeft.minutes).padStart(2, '0') : '00'}
             </div>
             <div className="font-elegant text-sm md:text-base mt-1" style={{ color: '#FAF8F3' }}>
               Minutos
@@ -117,7 +125,7 @@ export default function Hero() {
           </div>
           <div className="text-center">
             <div className="font-display text-4xl md:text-5xl" style={{ color: '#FAF8F3' }}>
-              {String(timeLeft.seconds).padStart(2, '0')}
+              {timeLeft ? String(timeLeft.seconds).padStart(2, '0') : '00'}
             </div>
             <div className="font-elegant text-sm md:text-base mt-1" style={{ color: '#FAF8F3' }}>
               Segundos
