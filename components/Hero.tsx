@@ -11,8 +11,8 @@ export default function Hero() {
   });
 
   useEffect(() => {
-    // 7 de Noviembre 2026, 20:30 hora de Buenos Aires (UTC-3)
-    const weddingDate = new Date('2026-11-07T20:30:00-03:00').getTime();
+    // 7 de Noviembre 2026, 20:00 hora de Buenos Aires (UTC-3)
+    const weddingDate = new Date('2026-11-07T20:00:00-03:00').getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -54,10 +54,10 @@ export default function Hero() {
 
         {/* Nombres de los novios */}
         <h1
-          className="font-display text-6xl md:text-8xl font-bold mb-4 tracking-wide"
-          style={{ color: '#FAF8F3' }}
+          className="text-7xl md:text-9xl mb-4"
+          style={{ color: '#FAF8F3', fontFamily: "'Parisienne', cursive", fontWeight: 400 }}
         >
-          Yas <span className="text-5xl md:text-7xl">&</span> Manu
+          Yas & Manu
         </h1>
 
         <div className="my-8">

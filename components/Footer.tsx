@@ -10,8 +10,11 @@ export default function Footer() {
         </div>
 
         {/* Mensaje principal */}
-        <h3 className="font-display text-3xl md:text-4xl font-bold mb-8 text-gold">
-          Yas <span className="text-2xl md:text-3xl">&</span> Manu
+        <h3
+          className="text-5xl md:text-6xl mb-8 text-gold"
+          style={{ fontFamily: "'Parisienne', cursive", fontWeight: 400 }}
+        >
+          Yas & Manu
         </h3>
 
         {/* Información de contacto */}
@@ -20,7 +23,7 @@ export default function Footer() {
             ¿Tenes alguna pregunta?
           </p>
           <a
-            href="https://wa.me/5493513224810"
+            href="https://wa.me/5493513224810?text=Hola%20Yas%2C%20tengo%20una%20consulta."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-elegant text-white/90 hover:text-gold transition-colors text-lg"

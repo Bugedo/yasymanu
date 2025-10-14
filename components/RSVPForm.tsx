@@ -180,7 +180,7 @@ export default function RSVPForm() {
                     <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl border-2 border-gold/40 p-3 md:p-4">
                       <div className="relative rounded-xl overflow-hidden shadow-lg">
                         <Image
-                          src="/images/general/graciasform.jpg"
+                          src="/images/general/fotograciasblancos.jpg"
                           alt="Gracias por confirmar"
                           width={800}
                           height={600}
@@ -255,7 +255,18 @@ export default function RSVPForm() {
                   </p>
                   <div className="font-elegant text-sm mt-3 space-y-1" style={{ color: '#FAF8F3' }}>
                     <p>Menores de 2 a 10 años: 50%</p>
-                    <p>Menores de 2 años: Gratis</p>
+                    <p>Menores de 2 años: Sin Costo</p>
+                    <p className="mt-3 pt-3 border-t border-gold/30">
+                      Si venis después de cena, contactate por{' '}
+                      <a
+                        href="https://wa.me/5493513224810?text=Hola%20Yas%2C%20voy%20despu%C3%A9s%20de%20Cena."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gold hover:text-gold/80 underline transition-colors"
+                      >
+                        whatsapp
+                      </a>
+                    </p>
                   </div>
                 </div>
 
@@ -452,7 +463,7 @@ export default function RSVPForm() {
                               className="block font-display text-lg font-semibold mb-2"
                               style={{ color: '#FAF8F3' }}
                             >
-                              Menores de 2 años (Gratis)
+                              Menores de 2 años (Sin Costo)
                             </label>
                             <input
                               type="number"
@@ -529,13 +540,35 @@ export default function RSVPForm() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full bg-gradient-to-r from-emerald to-olive text-white font-display text-xl font-semibold py-4 rounded-lg transition-all duration-300 shadow-lg ${
+                    className={`w-full bg-gradient-to-r from-olive to-olive-dark text-white font-display text-xl font-semibold py-4 rounded-lg transition-all duration-300 shadow-lg flex items-center justify-center gap-3 ${
                       isSubmitting
-                        ? 'opacity-50 cursor-not-allowed'
-                        : 'hover:from-emerald-dark hover:to-olive-dark hover:shadow-xl transform hover:-translate-y-1'
+                        ? 'opacity-70 cursor-not-allowed'
+                        : 'hover:shadow-xl transform hover:-translate-y-1'
                     }`}
                   >
-                    {isSubmitting ? 'Enviando...' : 'Confirmar Asistencia'}
+                    {isSubmitting && (
+                      <svg
+                        className="animate-spin h-6 w-6 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                    )}
+                    {isSubmitting ? 'Enviando...' : 'Enviar Confirmación'}
                   </button>
                 </div>
               </form>

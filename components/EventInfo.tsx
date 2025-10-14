@@ -109,7 +109,7 @@ export default function EventInfo() {
                   </p>
                 </div>
                 <div className="pt-4">
-                  <p className="font-display text-2xl font-semibold text-olive">20:30 hs</p>
+                  <p className="font-display text-2xl font-semibold text-olive">20:00 hs</p>
                 </div>
               </div>
 

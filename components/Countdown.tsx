@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
-// 7 de Noviembre 2025, 20:30 hora de Buenos Aires (UTC-3)
-const weddingDate = new Date('2025-11-07T20:30:00-03:00').getTime();
+// 7 de Noviembre 2025, 20:00 hora de Buenos Aires (UTC-3)
+const weddingDate = new Date('2025-11-07T20:00:00-03:00').getTime();
 
 const calculateTimeLeft = () => {
   const now = new Date().getTime();
