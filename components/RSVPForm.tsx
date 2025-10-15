@@ -519,7 +519,7 @@ export default function RSVPForm() {
                                   className="block font-display text-lg font-semibold mb-2"
                                   style={{ color: '#FAF8F3' }}
                                 >
-                                  Menores de 10 a 17 años (100% - ${formatPrice(precioAdulto)})
+                                  Menores de 11 a 17 años (100% - ${formatPrice(precioAdulto)})
                                 </label>
                                 <select
                                   id="menores10a17"
